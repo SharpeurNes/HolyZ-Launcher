@@ -31,7 +31,7 @@ javafx{
 }
 
 application{
-    mainClassName = 'sharpeurnes.holyzlauncher.Main'
+    getMainClass().set('sharpeurnes.holyzlauncher.Main')
 }
 
 compileJava{
@@ -40,10 +40,10 @@ compileJava{
 
 jar{
     manifest{
-        attributes 'Main-Class': 'sharpeurnes.holyzlauncher.Main'
+        manifest.attributes.put('Main-Class', 'sharpeurnes.holyzlauncher.Main')
     }
-    from{
-        configurations.compileClasspath.collect{
+    from {
+        configurations.compileClasspath.collect {
             it.isDirectory() ? it : zipTree(it)
         }
     }
