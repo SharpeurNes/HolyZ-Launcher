@@ -1,19 +1,50 @@
 plugins {
-    id 'java'
+    id 'idea'
+    id 'java-library'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
 }
 
+apply plugin: 'org.openjfx.javafxplugin'
+
 group = 'sharpeurnes'
-version = '1.0-SNAPSHOT'
+version = '1.0.0'
 
 repositories {
     mavenCentral()
+    maven{
+        url = 'https://jitpack.io/'
+        name = 'JitPack'
+    }
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
+
+    implementation 'fr.flowarg:flowupdater:1.3.+'
+    implementation 'fr.flowarg:openlauncherlib:3.+'
 }
 
-test {
-    useJUnitPlatform()
+javafx{
+    version = 12
+    modules = ['javafx.controls']
+}
+
+application{
+    mainClassName = 'sharpeurnes.holyzlauncher.Main'
+}
+
+compileJava{
+    options.encoding = "UTF-8"
+}
+
+jar{
+    manifest{
+        attributes 'Main-Class': 'sharpeurnes.holyzlauncher.Main'
+    }
+    from{
+        configurations.compileClasspath.collect{
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
 }
